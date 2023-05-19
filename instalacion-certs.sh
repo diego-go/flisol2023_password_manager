@@ -47,5 +47,6 @@ printf "\n"
 openssl x509 -req -in bitwarden.csr -CA self-signed-ca-cert.crt -CAkey private-ca.key -CAcreateserial -out bitwarden.crt -days 365 -sha256 -extfile bitwarden.ext
 
 mv bitwarden.crt bitwarden.key /etc/ssl/certs/
+mkdir /opt/bitwarden
 
 docker run -d --name bitwarden --restart unless-stopped -v /opt/bitwarden/:/data/ -v /etc/ssl/certs/:/ssl/ -e ROCKET_TLS='{certs="/ssl/bitwarden.crt",key="/ssl/bitwarden.key"}' -p 443:80 bitwardenrs/server
